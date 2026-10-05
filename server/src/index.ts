@@ -5,6 +5,7 @@ import {errorHandler} from './middlewares/errorMiddleware';
 import {initDb} from './db/db';
 import polygonsRouter from './features/polygons/polygons.router';
 import pointsRouter from './features/points/points.router';
+import usersRouter from './features/users/users.router';
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,7 @@ apiRouter.get('/', (req, res) => {
 
 apiRouter.use('/', polygonsRouter);
 apiRouter.use('/', pointsRouter);
+apiRouter.use('/', usersRouter);
 
 app.use(errorHandler);
 

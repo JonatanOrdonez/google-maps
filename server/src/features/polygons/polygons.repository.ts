@@ -50,3 +50,17 @@ export const deletePolygonRepository = async (id: string): Promise<boolean> => {
 
   return (result.rowCount ?? 0) > 0;
 };
+
+export const getPolygonIntersectingUserRepository = async (userId: number): Promise<Polygon | null> => {
+  const result = await pool.query<PolygonRow>(
+    `SELECT p.id, p.name, p.color, ST_AsGeoJSON(p.geom) AS geojson
+     FROM public.polygons p
+     JOIN public.user_coords u ON ST_Intersects(p.geom, u.coords)
+     WHERE u.id = $1
+     ORDER BY p.id
+     LIMIT 1`,
+    [userId],
+  );
+
+  return result.rows[0] ? rowToPolygon(result.rows[0]) : null;
+};

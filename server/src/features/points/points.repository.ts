@@ -25,3 +25,18 @@ export const deletePointRepository = async (id: string): Promise<boolean> => {
 
   return (result.rowCount ?? 0) > 0;
 };
+
+// Closest point within `meters` of the user, or null if none is that close
+export const getPointNearUserRepository = async (userId: number, meters: number = 5): Promise<Point | null> => {
+  const result = await pool.query<Point>(
+    `SELECT p.id, p.name, p.color, ST_Y(p.geom::geometry) AS lat, ST_X(p.geom::geometry) AS lng
+     FROM public.points p
+     JOIN public.user_coords u ON ST_DWithin(p.geom, u.coords, $2)
+     WHERE u.id = $1
+     ORDER BY ST_Distance(p.geom, u.coords)
+     LIMIT 1`,
+    [userId, meters],
+  );
+
+  return result.rows[0] ?? null;
+};

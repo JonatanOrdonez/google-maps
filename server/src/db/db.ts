@@ -30,4 +30,18 @@ export const initDb = async () => {
       geom GEOGRAPHY(POINT, 4326) NOT NULL
     );
   `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS public.user_coords (
+      id INTEGER PRIMARY KEY,
+      name TEXT NOT NULL,
+      coords GEOGRAPHY(POINT, 4326) NOT NULL
+    );
+  `);
+
+  await pool.query(`
+    INSERT INTO public.user_coords (id, name, coords)
+    VALUES (1, 'User 1', ST_SetSRID(ST_MakePoint(-76.53, 3.3416), 4326)::geography)
+    ON CONFLICT (id) DO NOTHING;
+  `);
 };

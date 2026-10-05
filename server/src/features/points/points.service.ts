@@ -2,6 +2,7 @@ import Boom from '@hapi/boom';
 import {
   createPointRepository,
   deletePointRepository,
+  getPointNearUserRepository,
   getPointsRepository,
 } from './points.repository';
 import { CreatePointDTO, Point } from './points.types';
@@ -20,4 +21,8 @@ export const deletePointService = async (id: string): Promise<void> => {
   if (!deleted) {
     throw Boom.notFound('Point not found');
   }
+};
+
+export const getPointNearUserService = async (userId: number, meters: number): Promise<Point | null> => {
+  return getPointNearUserRepository(userId, meters);
 };
