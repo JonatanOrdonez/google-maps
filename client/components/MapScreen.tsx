@@ -4,6 +4,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { PolygonsProvider, usePolygons } from '@/context/PolygonsContext';
 import { PointsProvider, usePoints } from '@/context/PointsContext';
+import { UserProvider } from '@/context/UserContext';
 import { MapMode } from '@/lib/types';
 import { ModeSelector } from '@/components/ModeSelector';
 import { PolygonsToolbar } from '@/components/PolygonsToolbar';
@@ -39,9 +40,11 @@ const MapContent = () => {
 };
 
 export const MapScreen = () => (
-  <PolygonsProvider>
-    <PointsProvider>
-      <MapContent />
-    </PointsProvider>
-  </PolygonsProvider>
+  <UserProvider>
+    <PolygonsProvider>
+      <PointsProvider>
+        <MapContent />
+      </PointsProvider>
+    </PolygonsProvider>
+  </UserProvider>
 );

@@ -6,6 +6,7 @@ import { usePolygons } from '@/context/PolygonsContext';
 import { usePoints } from '@/context/PointsContext';
 import { PolygonsLayer } from '@/components/PolygonsLayer';
 import { PointsLayer } from '@/components/PointsLayer';
+import { UserLayer } from '@/components/UserLayer';
 
 // Cali, Colombia
 const DEFAULT_CENTER: [number, number] = [3.4516, -76.532];
@@ -20,6 +21,7 @@ export default function MapView() {
       center={DEFAULT_CENTER}
       zoom={13}
       zoomControl={false}
+      keyboard={false}
       className="h-full w-full"
       style={{ cursor: drawing ? 'crosshair' : undefined }}
     >
@@ -29,6 +31,7 @@ export default function MapView() {
       />
       <PolygonsLayer />
       <PointsLayer />
+      <UserLayer />
     </MapContainer>
   );
 }

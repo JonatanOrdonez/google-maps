@@ -18,6 +18,13 @@ export interface Point {
   lng: number;
 }
 
+export interface User {
+  id: number;
+  name: string;
+  lat: number;
+  lng: number;
+}
+
 export type MapMode = 'polygons' | 'points';
 
 export type MapStatus = 'loading' | 'idle' | 'drawing' | 'setting-shape-config';
